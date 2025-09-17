@@ -1,0 +1,137 @@
+﻿<Window x:Class="IGAntiRansomwareUI.QuickSettingsPopup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IGAntiRansomwareUI"
+        mc:Ignorable="d"
+        Title="Configurações Rápidas"
+        Height="400" Width="500"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        Background="#1e1e2e"
+        Foreground="#FFCDD6F4">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFCDD6F4"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="#FF313244"/>
+            <Setter Property="Foreground" Value="#FFCDD6F4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FF555555"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5,0,10"/>
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="Background" Value="#FF313244"/>
+            <Setter Property="Foreground" Value="#FFCDD6F4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FF555555"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="0,5,0,10"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#FFCDD6F4"/>
+            <Setter Property="Margin" Value="0,10,0,5"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF89B4FA"/>
+            <Setter Property="Foreground" Value="#FF1E1E2E"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="Slider">
+            <Setter Property="Background" Value="#FF313244"/>
+            <Setter Property="Foreground" Value="#FF89B4FA"/>
+            <Setter Property="Margin" Value="0,5,0,10"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Cabeçalho -->
+        <TextBlock Grid.Row="0" Text="Configurações Rápidas" 
+                   FontSize="16" FontWeight="Bold"
+                   Margin="0,0,0,20"/>
+
+        <!-- Conteúdo -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Modo de Detecção -->
+                <TextBlock Text="Modo de Detecção"/>
+                <ComboBox x:Name="cmbDetectionMode" SelectedIndex="0">
+                    <ComboBoxItem Content="Modo Ativo (Bloquear e Alertar)"/>
+                    <ComboBoxItem Content="Modo Passivo (Apenas Alertar)"/>
+                    <ComboBoxItem Content="Modo Monitoramento (Apenas Log)"/>
+                </ComboBox>
+
+                <!-- Tamanho Máximo de Arquivo -->
+                <TextBlock Text="Tamanho Máximo para Escaneamento"/>
+                <StackPanel Orientation="Horizontal">
+                    <Slider x:Name="sliderMaxFileSize" Minimum="1" Maximum="500" Value="100" 
+                            Width="200" Margin="0,0,10,0"/>
+                    <TextBlock x:Name="txtMaxFileSize" Text="100 MB" MinWidth="60"/>
+                </StackPanel>
+
+                <!-- Opções de Backup -->
+                <TextBlock Text="Opções de Backup" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                <CheckBox x:Name="chkAutoBackup" Content="Backup Automático em Detecção"
+                          IsChecked="True"/>
+                <CheckBox x:Name="chkBackupEncrypted" Content="Manter Backups Criptografados"
+                          IsChecked="False" Margin="20,5,0,5"/>
+                <CheckBox x:Name="chkLimitBackups" Content="Limitar Número de Backups"
+                          IsChecked="True" Margin="20,5,0,5"/>
+
+                <!-- Limite de Backups -->
+                <StackPanel Margin="20,5,0,10" IsEnabled="{Binding ElementName=chkLimitBackups, Path=IsChecked}">
+                    <TextBlock Text="Máximo de Backups por Arquivo"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Slider x:Name="sliderMaxBackups" Minimum="1" Maximum="10" Value="3" 
+                                Width="150" Margin="0,0,10,0"/>
+                        <TextBlock x:Name="txtMaxBackups" Text="3" MinWidth="30"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Opções de Log -->
+                <TextBlock Text="Opções de Log" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                <CheckBox x:Name="chkDetailedLogs" Content="Logs Detalhados"
+                          IsChecked="True"/>
+                <CheckBox x:Name="chkLogToFile" Content="Salvar Logs em Arquivo"
+                          IsChecked="True" Margin="0,5,0,5"/>
+                <CheckBox x:Name="chkAutoClearLogs" Content="Limpar Logs Automaticamente"
+                          IsChecked="False" Margin="0,5,0,5"/>
+
+                <!-- Notificações -->
+                <TextBlock Text="Notificações" FontWeight="Bold" Margin="0,20,0,10"/>
+
+                <CheckBox x:Name="chkDesktopNotifications" Content="Notificações na Área de Trabalho"
+                          IsChecked="True"/>
+                <CheckBox x:Name="chkSoundAlert" Content="Alerta Sonoro"
+                          IsChecked="True" Margin="0,5,0,10"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Botões -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button x:Name="btnCancel" Content="Cancelar" Click="Cancel_Click"
+                    Background="#FF555555"/>
+            <Button x:Name="btnSave" Content="Aplicar Configurações" Click="SaveSettings_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

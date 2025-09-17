@@ -1,0 +1,6 @@
+*.suo
+*.user
+/.vs/
+IGAntiRansomwareUI/obj/
+IGAntiRansomwareUI/bin/
+IGAntiRansomwareUI/Properties
